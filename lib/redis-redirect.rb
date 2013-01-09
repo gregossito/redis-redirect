@@ -1,6 +1,8 @@
 require 'redis/namespace'
 
-require 'redis-redirect/routes' # routes
+require 'redis-redirect/routes'
+require 'redis-redirect/errors'
+require 'redis-redirect/persistence'
 require 'redis-redirect/redirect' # model
 
 module RedisRedirect

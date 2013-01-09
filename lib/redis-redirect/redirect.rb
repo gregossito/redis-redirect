@@ -3,6 +3,7 @@ require 'active_model/validations'
 
 class Redirect
   include ActiveModel::Validations
+  include RedisRedirect::Persistence
 
   extend ActiveModel::Naming
     
@@ -30,18 +31,7 @@ class Redirect
   end
   
   def inspect
-    "#<Redirect source: #{source.inspect}, target: #{target.inspect}"
-  end
-  
-  # pretty much the same as an update, actually, yea
-  def save
-    RedisRedirect.redis.set(source, target)
-  end
-  alias :update :save
-  
-  # FIXME: this isn't really update_attributes
-  def update_attributes(attributes = {})
-    RedisRedirect.redis.set(attributes['source'], attributes['target'])
+    "#<Redirect source: #{source.inspect}, target: #{target.inspect}>"
   end
   
   def id
@@ -55,24 +45,6 @@ class Redirect
   # MODULE ActiveRecord::AttributeMethods::PrimaryKey
   def to_key
     [to_param]
-  end
-  
-  def persisted?
-    !(new_record? || destroyed?)
-  end
-  
-  def destroyed?
-    @destroyed
-  end
-
-  def new_record?
-    !RedisRedirect.redis.get(source)
-  end
-
-  private
-
-  def self.redis
-    ::RedisRedirect.redis
   end
     
 end
