@@ -1,5 +1,6 @@
 test:
   url: "redis://localhost:6379/3"
+  namespace: "redis_redirect_test"
 
 development:
   url: "redis://localhost:6379/4"

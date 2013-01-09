@@ -31,11 +31,6 @@ namespace :spec do
   task :setup do
     puts "Specs require a spec/dummy/redis.yml file" if !File.exists?(File.expand_path(File.dirname(__FILE__) + '/spec/dummy/redis.yml'))
   end
-  # 
-  # desc "Cleanup the test environment"
-  # task :cleanup do
-  #   File.delete(File.expand_path(File.dirname(__FILE__) + '/../spec/test.db'))
-  # end
   
   desc "redis-redirect models"
   RSpec::Core::RakeTask.new(:redis_model) do |task|

@@ -35,4 +35,11 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
+  
+  # delete all the keys in our namespace
+  config.after(:all) do
+    RedisRedirect.redis.keys.each do |key|
+      RedisRedirect.redis.del(key)
+    end
+  end
 end

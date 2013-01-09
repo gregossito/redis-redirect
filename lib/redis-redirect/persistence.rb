@@ -61,7 +61,15 @@ module RedisRedirect
 
   private
     def create_or_update
-      "OK" == RedisRedirect.redis.set(source, target)
+      @source = ensure_leading_slashes(@source)
+      @target = ensure_leading_slashes(@target) # this could/should allow leading http as well
+      return false if @source.blank? || @target.blank?
+      "OK" == RedisRedirect.redis.set(@source, @target)
+    end
+    def ensure_leading_slashes(path)
+      return if path.nil?
+      path.sub!(/(\/)+$/,'') # remove trailing slash
+      path.match(/^\//) ? path : "/#{path}"
     end
   end
 end
