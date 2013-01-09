@@ -1,5 +1,6 @@
 <p id="notice"><%= notice %></p>
 
+<p><%= @redirect.source %> => <%= @redirect.target %></p>
 
 <%= link_to 'Edit', edit_redirect_path(@redirect) %> |
 <%= link_to 'Back', redirects_path %>

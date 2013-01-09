@@ -1,6 +1,7 @@
 require 'redis/namespace'
 
-require 'redis-redirect/route'
+require 'redis-redirect/routes' # routes
+require 'redis-redirect/redirect' # model
 
 module RedisRedirect
   extend self
@@ -40,6 +41,6 @@ module RedisRedirect
     self.redis = Redis.respond_to?(:connect) ? Redis.connect(:thread_safe => true) : "localhost:6379"
     self.redis
   end
-  
+
 end
 

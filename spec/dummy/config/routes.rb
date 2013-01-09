@@ -1,7 +1,7 @@
 Dummy::Application.routes.draw do
   resources :redirects
-
-
+  root :to => 'redirects#index'
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

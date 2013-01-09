@@ -10,7 +10,15 @@
       </ul>
     </div>
   <% end %>
-
+  
+  <div class="field">
+    <%= f.label :source %><br />
+    <%= f.text_field :source %>
+  </div>
+  <div class="field">
+    <%= f.label :target %><br />
+    <%= f.text_field :target %>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>

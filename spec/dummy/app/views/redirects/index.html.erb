@@ -2,6 +2,8 @@
 
 <table>
   <tr>
+    <th>source</th>
+    <th>target</th>
     <th></th>
     <th></th>
     <th></th>
@@ -9,6 +11,8 @@
 
 <% @redirects.each do |redirect| %>
   <tr>
+    <td><%= redirect.source %></td>
+    <td><%= redirect.target %></td>
     <td><%= link_to 'Show', redirect %></td>
     <td><%= link_to 'Edit', edit_redirect_path(redirect) %></td>
     <td><%= link_to 'Destroy', redirect, method: :delete, data: { confirm: 'Are you sure?' } %></td>
