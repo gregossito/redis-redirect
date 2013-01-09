@@ -1,5 +1,6 @@
 #!/usr/bin/env rake
 begin
+  ENV['BUNDLE_GEMFILE'] = File.dirname(__FILE__) + '/Gemfile'
   require 'bundler/setup'
 rescue LoadError
   puts 'You must `gem install bundler` and `bundle install` to run rake tasks'
@@ -12,6 +13,9 @@ rescue LoadError
   RDoc::Task = Rake::RDocTask
 end
 
+require 'rspec'
+require 'rspec/core/rake_task'
+
 RDoc::Task.new(:rdoc) do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title    = 'RedisRedirect'
@@ -20,8 +24,36 @@ RDoc::Task.new(:rdoc) do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
-
-
-
 Bundler::GemHelper.install_tasks
 
+namespace :spec do
+  desc "Verify config file"
+  task :setup do
+    puts "Specs require a spec/dummy/redis.yml file" if !File.exists?(File.expand_path(File.dirname(__FILE__) + '/spec/dummy/redis.yml'))
+  end
+  # 
+  # desc "Cleanup the test environment"
+  # task :cleanup do
+  #   File.delete(File.expand_path(File.dirname(__FILE__) + '/../spec/test.db'))
+  # end
+  
+  desc "redis-redirect models"
+  RSpec::Core::RakeTask.new(:redis_model) do |task|
+    redis_redirect_root = File.expand_path(File.dirname(__FILE__))
+    task.pattern = redis_redirect_root + '/spec/models/*_spec.rb'
+    puts task.pattern
+  end
+
+  # desc "Run the coverage report"
+  # RSpec::Core::RakeTask.new(:rcov) do |task|
+  #   slugger_root = File.expand_path(File.dirname(__FILE__) + '/..')
+  #   task.pattern = slugger_root + '/spec/lib/**/*_spec.rb'
+  #   task.rcov=true
+  #   task.rcov_opts = %w{--rails --exclude osx\/objc,gems\/,spec\/,features\/}
+  # end
+end
+
+desc "Run the test suite"
+task :spec => ['spec:setup', 'spec:redis_model']
+
+task :default => :spec
