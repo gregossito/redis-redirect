@@ -6,7 +6,7 @@ module RedisRedirect
       return continue_to_rails_stack if relative_path.nil?
 
       begin
-        new_location_relative_path = redis.get(relative_path) #Redirect.get_target_url(relative_path)
+        new_location_relative_path = RedisRedirect.redis.get(relative_path)
       rescue Redis::CannotConnectError => exception
         new_location_relative_path = nil
       end

@@ -38,6 +38,13 @@ namespace :spec do
     task.pattern = redis_redirect_root + '/spec/models/*_spec.rb'
     puts task.pattern
   end
+  
+  desc "redis-redirect router"
+  RSpec::Core::RakeTask.new(:redis_routes) do |task|
+    redis_redirect_root = File.expand_path(File.dirname(__FILE__))
+    task.pattern = redis_redirect_root + '/spec/routing/*_spec.rb'
+    puts task.pattern
+  end
 
   # desc "Run the coverage report"
   # RSpec::Core::RakeTask.new(:rcov) do |task|
@@ -49,6 +56,6 @@ namespace :spec do
 end
 
 desc "Run the test suite"
-task :spec => ['spec:setup', 'spec:redis_model']
+task :spec => ['spec:setup', 'spec:redis_model', 'spec:redis_routes']
 
 task :default => :spec
