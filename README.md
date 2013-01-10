@@ -7,14 +7,17 @@ it's a gem, do all that Gemfile stuff:
 
     gem 'redis-redirect'
 
-create a config/initializer/redis_redirect.rb like:
+create a config/initializers/redis_redirect.rb like:
 
     # Load config and set redis.
-    redis_config = YAML.load_file(rails_root + '/config/redis.yml')[rails_env]
-    RedisRedirect.redis = Redis.connect(:url => "redis://#{redis_config['host']}/#{redis_config['db']}")
+    if File.exists?(Rails.root.join('config/redis.yml'))
+      redis_config = YAML.load_file(Rails.root.join('config/redis.yml'))[Rails.env]
+      RedisRedirect.redis = Redis.connect(:url => "redis://#{redis_config['host']}/#{redis_config['db']}")
 
-    # Set namespace to prevent collisions
-    RedisRedirect.redis.namespace = "redis_redirect"  # default is redis_redirect
+      # Set namespace to prevent collisions
+      RedisRedirect.redis.namespace = "redirect"  # default is redis_redirect
+    end
+
 
 and hook it up to your routes file:
     
