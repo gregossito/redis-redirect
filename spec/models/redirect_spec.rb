@@ -3,11 +3,6 @@ require 'spec_helper'
 describe Redirect do
   let(:random_key_value) {["/" + (0...8).map{65.+(rand(26)).chr}.join, '/target']}
 
-  describe "fail" do
-    it "should fail" do
-      fail
-    end
-  end
 
   describe "save" do
     it "should create key value in redis" do
