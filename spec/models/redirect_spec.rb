@@ -43,6 +43,7 @@ describe Redirect do
       key, value = random_key_value
       RedisRedirect.redis.set(key, value)
       Redirect.find(key).destroy
+      sleep 6
       RedisRedirect.redis.get(key).should == nil
     end
   end
