@@ -69,7 +69,7 @@ module RedisRedirect
     def ensure_leading_slashes(path)
       return if path.nil?
       path.sub!(/(\/)+$/,'') # remove trailing slash
-      path.match(/^\//) ? path : "/#{path}"
+      path.match(/^(\/|http:\/\/|https:\/\/)/) ? path : "/#{path}"
     end
   end
 end
